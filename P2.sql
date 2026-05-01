@@ -83,3 +83,24 @@ where t.id in (
     where c.course_name like '%IT%'
       and c.teacher_id is not null
 );
+
+select c.id, c.course_name, t.full_name as teacher_name
+from courses c
+left join teachers t on c.teacher_id = t.id;
+ 
+select id, full_name, date_of_birth
+from students
+where year(date_of_birth) = 2005;
+ 
+select s.full_name, s.id as student_id, e.score
+from enrollments e
+join students s on e.student_id = s.id
+join courses c on e.course_id = c.id
+where c.course_name = 'Lập trình Web'
+order by e.score desc;
+ 
+select s.full_name as student_name, c.course_name, t.full_name as teacher_name
+from enrollments e
+join students s on e.student_id = s.id
+join courses c on e.course_id = c.id
+left join teachers t on c.teacher_id = t.id;
