@@ -104,3 +104,27 @@ from enrollments e
 join students s on e.student_id = s.id
 join courses c on e.course_id = c.id
 left join teachers t on c.teacher_id = t.id;
+
+
+select t.full_name, count(c.id) as total_courses
+from teachers t
+left join courses c on t.id = c.teacher_id
+group by t.id, t.full_name;
+ 
+select c.course_name, count(e.id) * c.tuition_fee as total_revenue
+from courses c
+left join enrollments e on c.id = e.course_id
+group by c.id, c.course_name, c.tuition_fee;
+ 
+select s.full_name, count(e.id) as total_courses
+from students s
+join enrollments e on s.id = e.student_id
+group by s.id, s.full_name, year(e.date)
+having count(e.id) >= 3;
+ 
+select c.course_name, avg(e.score) as avg_score
+from courses c
+join enrollments e on c.id = e.course_id
+where e.score is not null
+group by c.id, c.course_name
+having avg(e.score) < 5.0;
